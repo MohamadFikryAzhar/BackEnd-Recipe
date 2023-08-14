@@ -1,0 +1,8 @@
+node_modules/
+.env
+.vscode/
+tmp/
+design/
+recipe_api.http
+.babelrc
+test/
