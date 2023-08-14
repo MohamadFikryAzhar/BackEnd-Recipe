@@ -30,7 +30,7 @@
   "type": "module",
   "scripts": {
     "hot": "node --watch --trace-warnings index.js",
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "test": "jest"
   },
   "author": "Mohamad Fikry Azhar",
