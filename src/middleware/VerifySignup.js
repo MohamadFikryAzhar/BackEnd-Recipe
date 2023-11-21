@@ -9,14 +9,14 @@ export const checkingDuplicateNameEmail = async (req, res, next) => {
     if (resultName.rows[0]) {
         return res.fail({
             statuscode: 400, 
-            message: "Name already exists"
+            message: "Name already exist"
         });
     }
 
     if (resultEmail.rows[0]) {
         return res.fail({
             statuscode: 400, 
-            message: "Email already exists"
+            message: "Email already exist"
         });
     }
 
