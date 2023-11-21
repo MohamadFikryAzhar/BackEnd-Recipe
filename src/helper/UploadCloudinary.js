@@ -2,7 +2,10 @@ import multer from 'multer';
 import { cloudStorage } from '../config/diskstorage.js';
 
 const fileFilter = (req, file, callback) => {
-    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jfif') {
+    if (file.mimetype === 'image/png' || 
+        file.mimetype === 'image/jpg' || 
+        file.mimetype === 'image/jpeg' || 
+        file.mimetype === 'image/jfif') {
         callback(null, true);
         req.fileValid = true;
     } else {

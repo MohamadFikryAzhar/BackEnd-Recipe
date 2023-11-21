@@ -14,7 +14,7 @@ const systemStorage = multer.diskStorage({
 const cloudStorage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: "Recipess",
+        folder: "RecipeBE",
         allowed_formats: ["png", "jpg", "jpeg","jfif"]
     }
 });

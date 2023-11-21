@@ -6,7 +6,7 @@ dotenv.config();
 
 const catchExpired = (err, res, next) => {
     if (err instanceof jwt.TokenExpiredError) {
-        return res.status(401).json({statuscode: 401, message: "Authentication Failed, Token Expired!"});
+        return res.respondUnauthorized({statuscode: 401, message: "Unauthorized! Token was expired"});
     }
 
     next();
@@ -14,8 +14,8 @@ const catchExpired = (err, res, next) => {
 
 export const authenticateUser = async (req, res, next) => {
     const {authorization} = req.headers;
-    if (!authorization || !authorization.startsWith("Bearer ")) {
-        return res.status(403).json({statuscode: 403, message: "Please Provide the token"});
+    if (!authorization?.startsWith("Bearer ")) {
+        return res.failForbidden({statuscode: 403, message: "Please Provide token"});
     }
     
     const accessToken = authorization.split(" ")[1];

@@ -1,4 +1,4 @@
-export default class jwtConf {
+export default class JwtConf {
     secretKey;
     expiration;
     refreshExpiration;

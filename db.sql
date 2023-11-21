@@ -1,54 +1,72 @@
 CREATE TABLE recipe(
     id VARCHAR PRIMARY KEY NOT NULL,
-    title VARCHAR(255) UNIQUE,
+    title VARCHAR(150) UNIQUE,
     ingredients TEXT,
     image_path VARCHAR,
-    image_id VARCHAR,
     cloudinary_id VARCHAR,
     category VARCHAR NOT NULL,
     user_name VARCHAR NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP,
-    deleted_at TIMESTAMP,
-    FOREIGN KEY (user_name) REFERENCES users(name),
-    FOREIGN KEY (category) REFERENCES category(name)
+    deleted_at TIMESTAMP
 );
 
-CREATE TABLE users (
-id VARCHAR PRIMARY KEY NOT NULL,
-name VARCHAR(255) UNIQUE NOT NULL,
-email VARCHAR UNIQUE,
-password VARCHAR,
-role_name VARCHAR(255),
-photo VARCHAR,
-photo_id VARCHAR,
-created_at TIMESTAMP DEFAULT NOW(),
-updated_at TIMESTAMP,
-deleted_at TIMESTAMP,
-FOREIGN KEY (role_name) REFERENCES roles(role_name)
-);
+ALTER TABLE recipe ADD CONSTRAINT category_name_fkey FOREIGN KEY (category) REFERENCES category(name);
+ALTER TABLE recipe ADD CONSTRAINT user_name_fkey FOREIGN KEY (user_name) REFERENCES users(name) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE recipe ADD COLUMN image_id VARCHAR;
 
-CREATE TABLE roles(
-    id VARCHAR(255) PRIMARY KEY NOT NULL,
-    role_name VARCHAR UNIQUE NOT NULL
-);
+SELECT * FROM recipe;
 
 CREATE TABLE category(
-    id VARCHAR(255) PRIMARY KEY NOT NULL,
-    name VARCHAR(255) UNIQUE NOT NULL
+    id VARCHAR(100) PRIMARY KEY NOT NULL,
+    name VARCHAR(100) UNIQUE NOT NULL
 );
 
 CREATE INDEX category_name_index ON category(name);
+
+CREATE TABLE users(
+    id VARCHAR PRIMARY KEY NOT NULL,
+    name VARCHAR UNIQUE,
+    email VARCHAR UNIQUE,
+    password VARCHAR,
+    role_name VARCHAR(100),
+    photo VARCHAR,
+    photo_id VARCHAR,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP,
+    deleted_at TIMESTAMP
+);
+
+SELECT * FROM users;
+UPDATE users SET verified = true WHERE name = 'fikry a';
 CREATE INDEX user_role_index ON users(role_name);
+ALTER TABLE users ADD CONSTRAINT role_name_fkey FOREIGN KEY (role_name) REFERENCES roles(role_name);
+ALTER TABLE users ADD COLUMN verified BOOLEAN;
+
+CREATE TABLE roles(
+    id VARCHAR(100) PRIMARY KEY NOT NULL,
+    role_name VARCHAR UNIQUE
+);
+
 CREATE INDEX roles_name_index ON roles(role_name);
 
-INSERT INTO users (id, name, email, password, role_name)
-VALUES (1, 'Fikry Azhar', 'azharfikry6@gmail.com', 'jayajayajayajayajaya', 'user'), (2, 'Mama Recipe', 'mamahmuda@gmail.com', 'tukangbikinmakanan', 'chef'), (3, 'Indah Purnama', 'indahsajaakusi@gmail.com', 'supersemar123', 'admin');
-
+INSERT INTO category (id, name) VALUES (md5(random()::text), 'Main course'), (md5(random()::text), 'Appetizer'), (md5(random()::text), 'Dessert');
 INSERT INTO roles(id, role_name) VALUES(md5(random()::text), 'user');
-INSERT INTO roles(id, role_name) VALUES(md5(random()::text), 'admin');
-INSERT INTO roles(id, role_name) VALUES(md5(random()::text), 'chef');
+INSERT INTO users (id, name, email, password, role_name, verified)
+VALUES (md5(random()::text), 'mfikry', 'azharfikry6@gmail.com', 'bismillahespot', 'user', true);
 
-INSERT INTO recipe (id, title, ingredients, category, user_name) VALUES (1, 'Sandwich with egg', 'Egg, Bread, Sauce, Mayyonaise, Lettuce', 'Main course', 'Fikry Azhar'), (2, 'Omelette', 'Egg', 'Main course', 'Indah Purnama'), (3, 'Scrambbled Egg', 'Egg', 'Appetizer', 'Mama Recipe');
+SELECT * FROM recipe;
+TRUNCATE recipe CASCADE;
+SELECT * FROM recipe WHERE title ILIKE '%%' OFFSET 2 LIMIT 10;
+SELECT * FROM recipe WHERE category='Main course';
+SELECT * FROM recipe WHERE user_name = 'fikry azhar' OFFSET 1 LIMIT 10;
 
-INSERT INTO category (id, name) VALUES (1, 'Appetizer'), (2, 'Main course'), (3, 'Dessert');
+SELECT * FROM category;
+
+SELECT * FROM users;
+TRUNCATE users CASCADE;
+DELETE FROM users WHERE name='fikry';
+UPDATE users SET verified = true WHERE name = 'fikry';
+
+SELECT * FROM roles;
+INSERT INTO roles(id, role_name) VALUES(md5(random()::text), 'user');
