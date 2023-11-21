@@ -69,7 +69,7 @@ To install this project, you can follow this steps:
 ```
 
 ## Related Project
-* 🚀 [`Recipes Demo`](food-recipe-website-nine.vercel.app)
+* 🚀 [`Recipes Demo`](https://food-recipe-website-nine.vercel.app)
 * 🚀 [`Recipes Native Repository`](https://github.com/MohamadFikryAzhar/RecipeMobile)
 * 🚀 [`Recipes Frontend Repository`](https://github.com/MohamadFikryAzhar/FrontEnd-Recipe)
 
