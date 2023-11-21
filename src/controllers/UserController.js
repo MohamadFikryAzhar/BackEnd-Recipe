@@ -66,7 +66,7 @@ export class UserController {
             const resultName = await client.query("SELECT * FROM users WHERE email=$1", [email]);
             delete resultName.rows[0].password;
 
-            sendToMail(resultName.rows[0].email, "Verify Email", `https://excited-fawn-boot.cyclic.cloud/verify/${resultName.rows[0].id}`);
+            sendToMail(resultName.rows[0].email, "Verify Email", `https://wild-puce-gorilla-boot.cyclic.app/verify/${resultName.rows[0].id}`);
 
             return res.respondCreated({
                 statuscode: 201, 
